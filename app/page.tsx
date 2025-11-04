@@ -208,43 +208,93 @@ export default function Page() {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-24 sm:py-32 px-6 lg:px-8 bg-slate-50">
+      <section className="py-24 sm:py-32 px-6 lg:px-8 bg-gradient-to-b from-white to-slate-50">
         <div className="mx-auto max-w-7xl">
-          <div className="text-center mb-20 space-y-4">
-            <h2 className="text-4xl sm:text-5xl font-bold text-slate-900">이렇게 쉽습니다</h2>
+          <div className="text-center mb-20 space-y-6">
+            <div className="inline-block">
+              <span className="inline-block px-4 py-2 rounded-full bg-amber-100 text-amber-700 text-sm font-semibold mb-4">
+                간단한 3단계
+              </span>
+            </div>
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900">
+              클릭 3번이면
+              <br />
+              <span className="bg-gradient-to-r from-amber-500 to-yellow-600 bg-clip-text text-transparent">
+                프로 감성 완성
+              </span>
+            </h2>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+              복잡한 편집 프로그램도, 전문 지식도 필요 없어요
+            </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-16">
+          <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
             {[
               {
                 number: "01",
-                title: "사진 올리기",
-                desc: "갤러리에서 사진을 선택하거나 드래그하세요",
+                icon: "📸",
+                title: "사진 업로드",
+                desc: "드래그 앤 드롭으로 1초 만에 업로드",
+                detail: "모든 이미지 포맷 지원",
               },
               {
                 number: "02",
-                title: "프리셋 고르기",
-                desc: "12가지 도시 무드 중 원하는 스타일 선택",
+                icon: "🎨",
+                title: "프리셋 선택",
+                desc: "실시간 미리보기로 즉시 확인",
+                detail: "도쿄부터 파리까지 12가지 감성",
               },
               {
                 number: "03",
-                title: "완성본 받기",
-                desc: "보정된 사진을 바로 저장",
+                icon: "✨",
+                title: "다운로드",
+                desc: "원본 화질 그대로 저장",
+                detail: "워터마크 없이 바로 사용",
               },
-            ].map((step) => (
-              <div key={step.number} className="space-y-6 group cursor-default">
-                <div className="relative">
-                  <span className="text-7xl font-bold text-slate-100 absolute -left-4 -top-2">{step.number}</span>
-                  <div className="relative z-10 inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-yellow-600 text-white font-semibold text-lg shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                    {step.number}
+            ].map((step, idx) => (
+              <div
+                key={step.number}
+                className="relative group"
+                style={{ animationDelay: `${idx * 100}ms` }}
+              >
+                {/* Connection Line */}
+                {idx < 2 && (
+                  <div className="hidden md:block absolute top-20 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-amber-300 to-transparent" />
+                )}
+
+                {/* Card */}
+                <div className="relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-slate-100">
+                  {/* Icon with Number Badge */}
+                  <div className="relative mb-6">
+                    <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-50 to-yellow-50 text-5xl group-hover:scale-110 transition-transform duration-500">
+                      {step.icon}
+                    </div>
+                    <div className="absolute -top-2 -right-2 w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-yellow-600 text-white font-bold text-sm flex items-center justify-center shadow-lg">
+                      {step.number}
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <h3 className="text-2xl font-semibold text-slate-900 mb-3">{step.title}</h3>
-                  <p className="text-slate-600 leading-relaxed">{step.desc}</p>
+
+                  {/* Content */}
+                  <div className="space-y-3">
+                    <h3 className="text-2xl font-bold text-slate-900 group-hover:text-amber-600 transition-colors duration-300">
+                      {step.title}
+                    </h3>
+                    <p className="text-base text-slate-700 font-medium">{step.desc}</p>
+                    <p className="text-sm text-slate-500">{step.detail}</p>
+                  </div>
+
+                  {/* Hover Effect Border */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-amber-500 to-yellow-600 opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Bottom CTA */}
+          <div className="text-center mt-16">
+            <p className="text-slate-600 font-medium">
+              <span className="text-amber-600 font-bold">평균 30초</span>면 충분합니다
+            </p>
           </div>
         </div>
       </section>
