@@ -207,6 +207,128 @@ export default function Page() {
         </div>
       </section>
 
+      {/* Problem Section - New */}
+      <section className="py-24 sm:py-32 px-6 lg:px-8 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+        {/* Background Decoration */}
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-10 w-[500px] h-[500px] bg-amber-500/20 rounded-full filter blur-[120px]" />
+          <div className="absolute bottom-20 right-10 w-[500px] h-[500px] bg-yellow-500/20 rounded-full filter blur-[120px]" />
+        </div>
+
+        <div className="mx-auto max-w-7xl relative z-10">
+          {/* Section Header */}
+          <div className="text-center mb-16 space-y-4">
+            <div className="inline-block">
+              <span className="inline-block px-4 py-2 rounded-full bg-red-500/20 text-red-400 text-sm font-semibold border border-red-500/30">
+                이런 경험 있으신가요?
+              </span>
+            </div>
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
+              유명 작가 프리셋,
+              <br />
+              <span className="text-slate-400">내 사진엔 왜 안 어울릴까?</span>
+            </h2>
+            <p className="text-lg sm:text-xl text-slate-300 leading-relaxed max-w-3xl mx-auto">
+              수만원을 주고 산 프리셋. 작가의 사진에선 완벽했는데, 막상 내 사진에 적용하니 이상하기만 해요.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            {/* Left Column - Problem Points */}
+            <div className="space-y-5">
+              {[
+                { icon: "💸", text: "비싼 돈 주고 샀는데 쓸모가 없어요", subtext: "평균 2-5만원의 프리셋 팩" },
+                { icon: "😞", text: "작가의 사진에만 어울리는 색감", subtext: "촬영 환경이 달라 적용이 안 돼요" },
+                { icon: "⏰", text: "결국 다시 수동으로 편집", subtext: "시간과 돈을 둘 다 낭비하게 돼요" },
+              ].map((point, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-start gap-4 bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 group"
+                >
+                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-red-500/20 to-red-600/20 border border-red-500/30 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300">
+                    {point.icon}
+                  </div>
+                  <div className="space-y-1 flex-1">
+                    <p className="text-white font-semibold text-base">{point.text}</p>
+                    <p className="text-sm text-slate-400">{point.subtext}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Right Column - Solution */}
+            <div className="relative lg:sticky lg:top-24">
+              <div className="bg-gradient-to-br from-amber-500/15 to-yellow-500/15 backdrop-blur-md rounded-3xl p-8 lg:p-10 border border-amber-500/30 shadow-2xl">
+                <div className="space-y-6">
+                  <div className="inline-block">
+                    <span className="inline-block px-4 py-2 rounded-full bg-gradient-to-r from-amber-500 to-yellow-600 text-white text-sm font-semibold shadow-lg">
+                      PresetLabs는 다릅니다
+                    </span>
+                  </div>
+
+                  <h3 className="text-3xl lg:text-4xl font-bold text-white leading-tight">
+                    모든 사진에
+                    <br />
+                    자연스럽게 적용되는
+                    <br />
+                    <span className="bg-gradient-to-r from-amber-400 to-yellow-500 bg-clip-text text-transparent">
+                      범용 프리셋
+                    </span>
+                  </h3>
+
+                  <div className="space-y-4 pt-2">
+                    {[
+                      { icon: "🎯", title: "모든 환경에서 작동", desc: "실내, 실외, 낮, 밤 어디서나" },
+                      { icon: "🔄", title: "실시간 미리보기", desc: "적용 전 먼저 확인하고 선택" },
+                      { icon: "💰", title: "월 4,900원", desc: "한 번 사면 끝이 아닌 구독형 서비스" },
+                    ].map((feature, idx) => (
+                      <div key={idx} className="flex items-start gap-4 bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500/30 to-yellow-500/30 flex items-center justify-center text-xl border border-amber-500/40">
+                          {feature.icon}
+                        </div>
+                        <div className="space-y-1 flex-1">
+                          <p className="text-white font-semibold text-base">{feature.title}</p>
+                          <p className="text-sm text-slate-300">{feature.desc}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="pt-4">
+                    <Button
+                      onClick={() => handlePricingClick()}
+                      className="w-full bg-gradient-to-r from-amber-500 to-yellow-600 hover:from-amber-600 hover:to-yellow-700 text-white rounded-xl font-semibold h-14 shadow-lg hover:shadow-xl transition-all duration-300 text-base"
+                    >
+                      지금 무료로 체험하기
+                      <ArrowRight className="w-5 h-5 ml-2" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Stats */}
+          <div className="mt-20 pt-12 border-t border-white/10">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {[
+                { value: "98%", label: "만족도" },
+                { value: "12개", label: "도시 프리셋" },
+                { value: "30초", label: "평균 편집 시간" },
+                { value: "₩4,900", label: "시작 가격" },
+              ].map((stat, idx) => (
+                <div key={idx} className="text-center space-y-2">
+                  <div className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-amber-400 to-yellow-500 bg-clip-text text-transparent">
+                    {stat.value}
+                  </div>
+                  <div className="text-sm text-slate-400">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* How It Works Section */}
       <section className="py-24 sm:py-32 px-6 lg:px-8 bg-gradient-to-b from-white to-slate-50">
         <div className="mx-auto max-w-7xl">
