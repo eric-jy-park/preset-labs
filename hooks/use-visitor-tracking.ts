@@ -64,6 +64,14 @@ async function getClientIp(): Promise<string> {
 async function trackVisitor() {
   try {
     const userId = getUVfromCookie()
+
+    // Check if this user (ID) has already been tracked
+    const storageKey = `visitor_tracked_${userId}`
+    if (localStorage.getItem(storageKey)) {
+      console.log("Visitor already tracked")
+      return
+    }
+
     const ip = await getClientIp()
 
     const device = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
@@ -85,6 +93,8 @@ async function trackVisitor() {
     const response = await fetch(`${GOOGLE_APPS_SCRIPT_URL}?action=insert&table=visitors&data=${visitorData}`)
 
     if (response.ok) {
+      // Mark this user as tracked permanently
+      localStorage.setItem(storageKey, "true")
       console.log("Visitor tracked successfully")
     } else {
       console.error("Failed to track visitor:", response.statusText)
