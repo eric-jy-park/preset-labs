@@ -5,6 +5,7 @@ import { Instagram, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useWaitlistForm } from "@/hooks/use-waitlist-form"
+import { useVisitorTracking } from "@/hooks/use-visitor-tracking"
 import { SuccessModal } from "@/components/success-modal"
 import { BeforeAfterSlider } from "@/components/before-after-slider"
 import { EmailModal } from "@/components/email-modal"
@@ -12,6 +13,9 @@ import { Logo } from "@/components/logo"
 
 export default function Page() {
   const { email, setEmail, advice, setAdvice, isLoading, showSuccess, handleSubmit, setShowSuccess } = useWaitlistForm()
+
+  // Track visitor on page load
+  useVisitorTracking()
 
   const [mounted, setMounted] = useState(false)
   const [showEmailModal, setShowEmailModal] = useState(false)
