@@ -4,7 +4,7 @@
 
 > 전문가급 사진 필터를 클릭 한 번으로. 당신의 사진을 작품으로 만들어보세요.
 
-![](https://velog.velcdn.com/images/bokdol11859/post/a06687df-4c98-471a-8c3a-4b2badef77d1/image.png)
+<img width="2043" height="1157" alt="0736368ea74ce8426a637bda9e42dee273586af27defa80ee6cef3e7db97ca58-min" src="https://github.com/user-attachments/assets/3ac37cb5-8fb6-4112-95e7-f166d7132c90" />
 
 <br />
 
