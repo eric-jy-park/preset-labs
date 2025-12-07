@@ -9,6 +9,7 @@ import { applyCSSFilters } from "@/lib/filters/presets"
 import { toast } from "sonner"
 import { useUser } from "@clerk/nextjs"
 import { FeedbackModal } from "@/components/modals/FeedbackModal"
+import { CongratsModal } from "@/components/modals/CongratsModal"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,7 +35,10 @@ export function DownloadButton({ hasGivenFeedback, onFeedbackGiven }: DownloadBu
   const { user } = useUser()
   const [isExporting, setIsExporting] = useState(false)
   const [showFeedbackModal, setShowFeedbackModal] = useState(false)
+  const [showCongratsModal, setShowCongratsModal] = useState(false)
   const [pendingDownload, setPendingDownload] = useState<{ quality: Quality; format: Format } | null>(null)
+  const [downloadedImageUrl, setDownloadedImageUrl] = useState("")
+  const [downloadedCreditsRemaining, setDownloadedCreditsRemaining] = useState(0)
 
   const canDownload = currentPhoto && selectedPreset
   const hasEnoughCredits = credits >= DOWNLOAD_COST
@@ -51,7 +55,7 @@ export function DownloadButton({ hasGivenFeedback, onFeedbackGiven }: DownloadBu
     executeDownload(quality, format)
   }
 
-  const handleFeedbackComplete = async (feedback?: string) => {
+  const handleFeedbackComplete = async () => {
     setShowFeedbackModal(false)
 
     // Mark user as having given feedback
@@ -154,7 +158,9 @@ export function DownloadButton({ hasGivenFeedback, onFeedbackGiven }: DownloadBu
       document.body.appendChild(a)
       a.click()
       document.body.removeChild(a)
-      URL.revokeObjectURL(url)
+
+      // Store the filtered image URL for congrats modal (don't revoke yet)
+      const filteredImageUrl = url
 
       // Save to gallery
       try {
@@ -175,6 +181,14 @@ export function DownloadButton({ hasGivenFeedback, onFeedbackGiven }: DownloadBu
         console.error("Failed to save to gallery:", err)
         // Don't show error to user - download still succeeded
       }
+
+      // Show congrats modal with filtered image
+      setDownloadedImageUrl(filteredImageUrl)
+      setDownloadedCreditsRemaining(newCredits)
+      setShowCongratsModal(true)
+
+      // Clean up the blob URL after modal is closed (5 seconds delay)
+      setTimeout(() => URL.revokeObjectURL(filteredImageUrl), 5000)
 
       toast.success(`Photo downloaded! ${newCredits} credits remaining`)
     } catch (error) {
@@ -270,6 +284,17 @@ export function DownloadButton({ hasGivenFeedback, onFeedbackGiven }: DownloadBu
           open={showFeedbackModal}
           onClose={handleFeedbackComplete}
           userEmail={user.primaryEmailAddress?.emailAddress || user.emailAddresses[0]?.emailAddress || ""}
+        />
+      )}
+
+      {/* Congrats Modal */}
+      {currentPhoto && selectedPreset && downloadedImageUrl && (
+        <CongratsModal
+          open={showCongratsModal}
+          onClose={() => setShowCongratsModal(false)}
+          imageUrl={downloadedImageUrl}
+          presetName={selectedPreset.displayName}
+          creditsRemaining={downloadedCreditsRemaining}
         />
       )}
     </>
