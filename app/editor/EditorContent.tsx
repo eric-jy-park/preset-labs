@@ -43,6 +43,27 @@ export function EditorContent() {
     initializeUser();
   }, []);
 
+  // Refetch credits when page becomes visible (handles navigation and tab switching)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        fetchCredits();
+      }
+    };
+
+    const handleFocus = () => {
+      fetchCredits();
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("focus", handleFocus);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("focus", handleFocus);
+    };
+  }, [fetchCredits]);
+
   const handleRemovePhoto = () => {
     setCurrentPhoto(null);
   };

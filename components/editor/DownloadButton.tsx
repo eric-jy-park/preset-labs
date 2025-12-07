@@ -31,7 +31,7 @@ interface DownloadButtonProps {
 
 export function DownloadButton({ hasGivenFeedback, onFeedbackGiven }: DownloadButtonProps) {
   const { currentPhoto, selectedPreset, filterIntensity } = useEditorStore()
-  const { credits, deductCredits } = useCreditsStore()
+  const { credits, deductCredits, fetchCredits } = useCreditsStore()
   const { user } = useUser()
   const [isExporting, setIsExporting] = useState(false)
   const [showFeedbackModal, setShowFeedbackModal] = useState(false)
@@ -42,6 +42,12 @@ export function DownloadButton({ hasGivenFeedback, onFeedbackGiven }: DownloadBu
 
   const canDownload = currentPhoto && selectedPreset
   const hasEnoughCredits = credits >= DOWNLOAD_COST
+
+  const handleCongratsModalClose = () => {
+    setShowCongratsModal(false)
+    // Refetch credits to ensure we have the latest value
+    fetchCredits()
+  }
 
   const handleDownloadClick = (quality: Quality, format: Format) => {
     // Check if user needs to give feedback first
@@ -291,7 +297,7 @@ export function DownloadButton({ hasGivenFeedback, onFeedbackGiven }: DownloadBu
       {currentPhoto && selectedPreset && downloadedImageUrl && (
         <CongratsModal
           open={showCongratsModal}
-          onClose={() => setShowCongratsModal(false)}
+          onClose={handleCongratsModalClose}
           imageUrl={downloadedImageUrl}
           presetName={selectedPreset.displayName}
           creditsRemaining={downloadedCreditsRemaining}
