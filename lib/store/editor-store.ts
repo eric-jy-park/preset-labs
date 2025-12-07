@@ -1,39 +1,40 @@
-import { create } from "zustand"
-import type { Photo } from "@/lib/db/schema"
-import type { FilterPreset } from "@/lib/filters/presets"
+import { create } from "zustand";
+import type { Photo } from "@/lib/db/schema";
+import type { FilterPreset } from "@/lib/filters/presets";
 
-export type PreviewMode = "split" | "side-by-side" | "before" | "after"
+export type PreviewMode = "split" | "side-by-side" | "before" | "after";
 
 interface EditorState {
   // Current state
-  currentPhoto: Photo | null
-  selectedPreset: FilterPreset | null
-  filterIntensity: number // 0-100
-  isProcessing: boolean
-  previewMode: PreviewMode
+  currentPhoto: Photo | null;
+  selectedPreset: FilterPreset | null;
+  filterIntensity: number; // 0-100
+  isProcessing: boolean;
+  previewMode: PreviewMode;
 
   // Actions
-  setCurrentPhoto: (photo: Photo | null) => void
-  setSelectedPreset: (preset: FilterPreset | null) => void
-  updateFilterIntensity: (intensity: number) => void
-  setProcessing: (isProcessing: boolean) => void
-  setPreviewMode: (mode: PreviewMode) => void
-  resetFilters: () => void
-  reset: () => void
+  setCurrentPhoto: (photo: Photo | null) => void;
+  setSelectedPreset: (preset: FilterPreset | null) => void;
+  updateFilterIntensity: (intensity: number) => void;
+  setProcessing: (isProcessing: boolean) => void;
+  setPreviewMode: (mode: PreviewMode) => void;
+  resetFilters: () => void;
+  reset: () => void;
 }
 
 export const useEditorStore = create<EditorState>((set) => ({
   // Initial state
   currentPhoto: null,
   selectedPreset: null,
-  filterIntensity: 100,
+  filterIntensity: 50,
   isProcessing: false,
   previewMode: "split",
 
   // Actions
   setCurrentPhoto: (photo) => set({ currentPhoto: photo }),
 
-  setSelectedPreset: (preset) => set({ selectedPreset: preset, filterIntensity: 100 }),
+  setSelectedPreset: (preset) =>
+    set({ selectedPreset: preset, filterIntensity: 50 }),
 
   updateFilterIntensity: (intensity) =>
     set({ filterIntensity: Math.max(0, Math.min(100, intensity)) }),
@@ -45,7 +46,7 @@ export const useEditorStore = create<EditorState>((set) => ({
   resetFilters: () =>
     set({
       selectedPreset: null,
-      filterIntensity: 100,
+      filterIntensity: 50,
       previewMode: "split",
     }),
 
@@ -53,8 +54,8 @@ export const useEditorStore = create<EditorState>((set) => ({
     set({
       currentPhoto: null,
       selectedPreset: null,
-      filterIntensity: 100,
+      filterIntensity: 50,
       isProcessing: false,
       previewMode: "split",
     }),
-}))
+}));
