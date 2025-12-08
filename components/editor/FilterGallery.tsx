@@ -4,6 +4,7 @@ import { PRESETS, applyCSSFilters } from "@/lib/filters/presets"
 import { useEditorStore } from "@/lib/store/editor-store"
 import { Check } from "lucide-react"
 import Image from "next/image"
+import { trackEvent } from "@/lib/analytics"
 
 export function FilterGallery() {
   const { selectedPreset, setSelectedPreset } = useEditorStore()
@@ -17,7 +18,16 @@ export function FilterGallery() {
           return (
             <button
               key={preset.id}
-              onClick={() => setSelectedPreset(preset)}
+              onClick={async () => {
+                setSelectedPreset(preset)
+
+                // Track preset selection
+                await trackEvent({
+                  eventType: "preset_selected",
+                  presetId: preset.id,
+                  presetName: preset.displayName,
+                })
+              }}
               className={`
                 group relative
                 rounded-md overflow-hidden

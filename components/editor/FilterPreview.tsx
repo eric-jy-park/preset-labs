@@ -6,6 +6,7 @@ import { applyCSSFilters } from "@/lib/filters/presets"
 import { Slider } from "@/components/ui/slider"
 import { RotateCcw, Maximize2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { trackEvent } from "@/lib/analytics"
 
 export function FilterPreview() {
   const {
@@ -211,7 +212,22 @@ export function FilterPreview() {
           </div>
           <Slider
             value={[filterIntensity]}
-            onValueChange={(value) => updateFilterIntensity(value[0])}
+            onValueChange={(value) => {
+              updateFilterIntensity(value[0])
+
+              // Debounced tracking (only track when user stops dragging)
+              clearTimeout((window as any).intensityTrackTimeout)
+              ;(window as any).intensityTrackTimeout = setTimeout(async () => {
+                if (selectedPreset) {
+                  await trackEvent({
+                    eventType: "intensity_changed",
+                    presetId: selectedPreset.id,
+                    presetName: selectedPreset.displayName,
+                    intensity: value[0],
+                  })
+                }
+              }, 1000) // 1초 debounce
+            }}
             min={0}
             max={100}
             step={1}

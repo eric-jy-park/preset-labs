@@ -10,6 +10,7 @@ import { toast } from "sonner"
 import { useUser } from "@clerk/nextjs"
 import { FeedbackModal } from "@/components/modals/FeedbackModal"
 import { CongratsModal } from "@/components/modals/CongratsModal"
+import { trackEvent } from "@/lib/analytics"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -84,6 +85,14 @@ export function DownloadButton({ hasGivenFeedback, onFeedbackGiven }: DownloadBu
       toast.error("No photo or filter selected")
       return
     }
+
+    // Track download initiation
+    await trackEvent({
+      eventType: "download_initiated",
+      presetId: selectedPreset?.id,
+      presetName: selectedPreset?.displayName,
+      intensity: filterIntensity,
+    })
 
     // Check credits before proceeding
     if (!hasEnoughCredits) {
