@@ -241,7 +241,7 @@ export function DownloadButton({ hasGivenFeedback, onFeedbackGiven }: DownloadBu
             )}
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuContent align="end" className="w-full md:w-56 max-w-[calc(100vw-2rem)]">
           <div className="px-2 py-2 text-xs bg-amber-500/10 border border-amber-500/30 rounded-md mx-2 my-1.5">
             <div className="flex items-center gap-1.5 text-amber-400 font-medium mb-1">
               <Coins className="w-3.5 h-3.5" />

@@ -151,7 +151,7 @@ export function PhotoUploader() {
           ${isUploading ? "cursor-not-allowed" : ""}
         `}
       >
-        <div className="p-12 flex flex-col items-center justify-center text-center">
+        <div className="p-6 md:p-12 flex flex-col items-center justify-center text-center">
           {isUploading ? (
             <>
               <Loader2 className="w-12 h-12 text-blue-500 animate-spin mb-4" />
@@ -175,7 +175,7 @@ export function PhotoUploader() {
                   <Upload className="w-8 h-8 text-slate-400" />
                 )}
               </div>
-              <h3 className="text-xl font-bold text-white mb-2">
+              <h3 className="text-lg md:text-xl font-bold text-white mb-2">
                 {isDragging ? "Drop your photo here" : "Upload a photo"}
               </h3>
               <p className="text-sm text-slate-400 mb-4">

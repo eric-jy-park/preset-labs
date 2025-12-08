@@ -15,13 +15,13 @@ export function EditorHeader({ userName }: EditorHeaderProps) {
 
   return (
     <header className="border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-md sticky top-0 z-50">
-      <div className="px-6 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-8">
-          <h1 className="text-xl font-semibold text-white">PresetLabs</h1>
-          <nav className="flex items-center gap-1">
+      <div className="px-3 md:px-6 h-16 flex items-center justify-between">
+        <div className="flex items-center gap-3 md:gap-8">
+          <h1 className="text-lg md:text-xl font-semibold text-white">PresetLabs</h1>
+          <nav className="flex items-center gap-0.5 md:gap-1">
             <Link
               href="/editor"
-              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
+              className={`px-2 md:px-3 py-2 rounded-lg text-xs md:text-sm font-medium transition-colors flex items-center gap-1.5 md:gap-2 ${
                 pathname === "/editor"
                   ? "bg-slate-800 text-white"
                   : "text-slate-400 hover:text-white hover:bg-slate-800/50"
@@ -32,7 +32,7 @@ export function EditorHeader({ userName }: EditorHeaderProps) {
             </Link>
             <Link
               href="/gallery"
-              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
+              className={`px-2 md:px-3 py-2 rounded-lg text-xs md:text-sm font-medium transition-colors flex items-center gap-1.5 md:gap-2 ${
                 pathname === "/gallery"
                   ? "bg-slate-800 text-white"
                   : "text-slate-400 hover:text-white hover:bg-slate-800/50"
@@ -43,9 +43,9 @@ export function EditorHeader({ userName }: EditorHeaderProps) {
             </Link>
           </nav>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 md:gap-3">
           <CreditBadge />
-          <span className="text-sm text-slate-400">{userName}</span>
+          <span className="hidden sm:inline text-sm text-slate-400">{userName}</span>
           <UserButton />
         </div>
       </div>

@@ -83,12 +83,12 @@ export function FilterPreview() {
   if (!selectedPreset) {
     return (
       <div className="w-full space-y-4">
-        <div className="relative w-full max-h-[calc(100vh-280px)] flex items-center justify-center">
+        <div className="relative w-full max-h-[40vh] md:max-h-[calc(100vh-280px)] flex items-center justify-center">
           <div className="relative rounded-2xl overflow-hidden bg-slate-900 max-w-full max-h-full">
             <img
               src={currentPhoto.originalUrl}
               alt={currentPhoto.fileName}
-              className="max-w-full max-h-[calc(100vh-280px)] object-contain"
+              className="max-w-full max-h-[40vh] md:max-h-[calc(100vh-280px)] object-contain"
             />
           </div>
         </div>
@@ -114,7 +114,7 @@ export function FilterPreview() {
   return (
     <div className="w-full space-y-4">
       {/* Preview Mode Toggle */}
-      <div className="flex items-center justify-end gap-2">
+      <div className="flex items-center justify-end gap-1.5 md:gap-2">
         <Button
           variant={previewMode === "split" ? "default" : "outline"}
           size="sm"
@@ -133,7 +133,7 @@ export function FilterPreview() {
 
       {/* Image Preview */}
       {previewMode === "split" ? (
-        <div className="relative w-full max-h-[calc(100vh-280px)] flex items-center justify-center">
+        <div className="relative w-full max-h-[40vh] md:max-h-[calc(100vh-280px)] flex items-center justify-center">
           <div
             ref={containerRef}
             className="relative rounded-2xl overflow-hidden bg-slate-900 select-none max-w-full max-h-full"
@@ -142,7 +142,7 @@ export function FilterPreview() {
             <img
               src={currentPhoto.originalUrl}
               alt="Original"
-              className="max-w-full max-h-[calc(100vh-280px)] object-contain block"
+              className="max-w-full max-h-[40vh] md:max-h-[calc(100vh-280px)] object-contain block"
               draggable={false}
             />
 
@@ -162,12 +162,12 @@ export function FilterPreview() {
 
           {/* Slider Handle */}
           <div
-            className="absolute top-0 bottom-0 w-0.5 bg-white cursor-ew-resize z-10"
+            className="absolute top-0 bottom-0 w-1 md:w-0.5 bg-white cursor-ew-resize z-10"
             style={{ left: `${sliderPosition}%` }}
             onMouseDown={handleMouseDown}
             onTouchStart={handleMouseDown}
           >
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 md:w-10 md:h-10 bg-white rounded-full shadow-lg flex items-center justify-center">
               <div className="flex gap-1">
                 <div className="w-0.5 h-4 bg-slate-900" />
                 <div className="w-0.5 h-4 bg-slate-900" />
@@ -185,12 +185,12 @@ export function FilterPreview() {
           </div>
         </div>
       ) : (
-        <div className="relative w-full max-h-[calc(100vh-280px)] flex items-center justify-center">
+        <div className="relative w-full max-h-[40vh] md:max-h-[calc(100vh-280px)] flex items-center justify-center">
           <div className="relative rounded-2xl overflow-hidden bg-slate-900 max-w-full max-h-full">
             <img
               src={currentPhoto.originalUrl}
               alt="Filtered"
-              className="max-w-full max-h-[calc(100vh-280px)] object-contain"
+              className="max-w-full max-h-[40vh] md:max-h-[calc(100vh-280px)] object-contain"
               style={{ filter: filterStyle }}
             />
             {selectedPreset && (

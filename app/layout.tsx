@@ -13,6 +13,11 @@ export const metadata: Metadata = {
   title: "PresetLabs - 사진 프리셋 마켓플레이스",
   description: "유명 작가의 프리셋을 당신의 사진으로 먼저 테스트하세요. 12개의 프리셋을 무료로 체험해보세요.",
   generator: "v0.app",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+  },
 }
 
 export default function RootLayout({

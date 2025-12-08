@@ -1,103 +1,106 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "@/components/ui/dialog"
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { Sparkles, Send } from "lucide-react"
+import { useState } from "react";
+import { Drawer } from "vaul";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Sparkles, Send } from "lucide-react";
 
 interface FeedbackModalProps {
-  open: boolean
-  onClose: () => void
-  userEmail: string
+  open: boolean;
+  onClose: () => void;
+  userEmail: string;
 }
 
-const MIN_FEEDBACK_LENGTH = 10
+const MIN_FEEDBACK_LENGTH = 5;
 
 // Cookie helper functions
 function getCookieValue(name: string): string | undefined {
-  if (typeof document === "undefined") return undefined
-  const value = "; " + document.cookie
-  const parts = value.split("; " + name + "=")
+  if (typeof document === "undefined") return undefined;
+  const value = "; " + document.cookie;
+  const parts = value.split("; " + name + "=");
   if (parts.length === 2) {
-    return parts.pop()?.split(";").shift()
+    return parts.pop()?.split(";").shift();
   }
 }
 
 function setCookieValue(name: string, value: string, days: number) {
-  if (typeof document === "undefined") return
-  let expires = ""
+  if (typeof document === "undefined") return;
+  let expires = "";
   if (days) {
-    const date = new Date()
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
-    expires = "; expires=" + date.toUTCString()
+    const date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    expires = "; expires=" + date.toUTCString();
   }
-  document.cookie = name + "=" + (value || "") + expires + "; path=/"
+  document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
 function getUVfromCookie(): string {
-  const hash = Math.random().toString(36).substring(2, 8).toUpperCase()
-  const existingHash = getCookieValue("user")
+  const hash = Math.random().toString(36).substring(2, 8).toUpperCase();
+  const existingHash = getCookieValue("user");
   if (!existingHash) {
-    setCookieValue("user", hash, 180)
-    return hash
+    setCookieValue("user", hash, 180);
+    return hash;
   }
-  return existingHash
+  return existingHash;
 }
 
-export function FeedbackModal({ open, onClose, userEmail }: FeedbackModalProps) {
-  const [feedback, setFeedback] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false)
+export function FeedbackModal({
+  open,
+  onClose,
+  userEmail,
+}: FeedbackModalProps) {
+  const [feedback, setFeedback] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const isValidFeedback = feedback.trim().length >= MIN_FEEDBACK_LENGTH
+  const isValidFeedback = feedback.trim().length >= MIN_FEEDBACK_LENGTH;
 
   const handleSubmit = async () => {
-    if (!isValidFeedback) return
+    if (!isValidFeedback) return;
 
-    setIsSubmitting(true)
+    setIsSubmitting(true);
 
     try {
       // Submit feedback to Google Sheets
       const GOOGLE_APPS_SCRIPT_URL =
-        "https://script.google.com/macros/s/AKfycbyrUmgyyFF-7EJHaI85kCXtmxSsUlJ41nkFttUHxAkpC_HdtW3KKZLEQN11cCQVsopc-w/exec"
+        "https://script.google.com/macros/s/AKfycbyrUmgyyFF-7EJHaI85kCXtmxSsUlJ41nkFttUHxAkpC_HdtW3KKZLEQN11cCQVsopc-w/exec";
 
-      const userId = getUVfromCookie()
+      const userId = getUVfromCookie();
 
       const feedbackData = JSON.stringify({
         id: userId,
         email: userEmail,
         advice: feedback.trim(),
-      })
+      });
 
       await fetch(
         `${GOOGLE_APPS_SCRIPT_URL}?action=insert&table=tab_final&data=${feedbackData}`
-      )
+      );
 
-      onClose()
+      onClose();
     } catch (error) {
-      console.error("Failed to submit feedback:", error)
+      console.error("Failed to submit feedback:", error);
       // Continue anyway - don't block the download
-      onClose()
+      onClose();
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
-    <Dialog open={open} onOpenChange={() => {}} modal>
-      <DialogContent
-        className="sm:max-w-md border-0 bg-slate-900 p-0 gap-0 overflow-hidden shadow-2xl"
-        onPointerDownOutside={(e) => e.preventDefault()}
-        onEscapeKeyDown={(e) => e.preventDefault()}
-      >
-        <VisuallyHidden>
-          <DialogTitle>첫 다운로드 피드백</DialogTitle>
-        </VisuallyHidden>
+    <Drawer.Root open={open} onOpenChange={() => {}} modal dismissible={false}>
+      <Drawer.Portal>
+        <Drawer.Overlay className="fixed inset-0 bg-black/60 z-[100]" />
+        <Drawer.Content className="fixed bottom-0 left-0 right-0 max-h-[96vh] md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-md bg-slate-900 border-0 shadow-2xl outline-none rounded-t-2xl md:rounded-2xl z-[100]">
+          {/* Drawer Handle - Mobile only */}
+          <div className="md:hidden flex justify-center pt-3 pb-1">
+            <div className="w-12 h-1.5 bg-slate-700 rounded-full" />
+          </div>
+
+          <VisuallyHidden>
+            <Drawer.Title>첫 다운로드 피드백</Drawer.Title>
+          </VisuallyHidden>
 
         {/* Clean Header */}
         <div className="relative px-8 pt-10 pb-8">
@@ -127,13 +130,15 @@ export function FeedbackModal({ open, onClose, userEmail }: FeedbackModalProps) 
               <label className="text-sm font-medium text-slate-300">
                 솔직한 피드백을 남겨주세요
               </label>
-              <span className={`text-xs font-medium transition-colors ${
-                isValidFeedback
-                  ? "text-green-400"
-                  : feedback.length > 0
+              <span
+                className={`text-xs font-medium transition-colors ${
+                  isValidFeedback
+                    ? "text-green-400"
+                    : feedback.length > 0
                     ? "text-amber-400"
                     : "text-slate-500"
-              }`}>
+                }`}
+              >
                 {feedback.length}/{MIN_FEEDBACK_LENGTH}
               </span>
             </div>
@@ -176,7 +181,8 @@ export function FeedbackModal({ open, onClose, userEmail }: FeedbackModalProps) 
             )}
           </Button>
         </div>
-      </DialogContent>
-    </Dialog>
-  )
+        </Drawer.Content>
+      </Drawer.Portal>
+    </Drawer.Root>
+  );
 }

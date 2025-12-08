@@ -1,11 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "@/components/ui/dialog"
+import { Drawer } from "vaul"
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
 import { Button } from "@/components/ui/button"
 import { Check, Sparkles } from "lucide-react"
@@ -60,11 +56,18 @@ export function CongratsModal({
   }, [open])
 
   return (
-    <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto border-0 bg-slate-950 p-0 gap-0 shadow-2xl">
-        <VisuallyHidden>
-          <DialogTitle>다운로드 완료</DialogTitle>
-        </VisuallyHidden>
+    <Drawer.Root open={open} onOpenChange={onClose}>
+      <Drawer.Portal>
+        <Drawer.Overlay className="fixed inset-0 bg-black/60 z-[100]" />
+        <Drawer.Content className="fixed bottom-0 left-0 right-0 max-h-[90vh] md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:max-w-[600px] md:max-h-[90vh] overflow-y-auto border-0 bg-slate-950 outline-none shadow-2xl rounded-t-2xl md:rounded-2xl z-[100]">
+          {/* Drawer Handle - Mobile only */}
+          <div className="md:hidden flex justify-center pt-3 pb-1">
+            <div className="w-12 h-1.5 bg-slate-700 rounded-full" />
+          </div>
+
+          <VisuallyHidden>
+            <Drawer.Title>다운로드 완료</Drawer.Title>
+          </VisuallyHidden>
 
         {/* Image Preview - Full width */}
         <div className="relative pt-4 sm:pt-8 px-4 sm:px-8 pb-4 sm:pb-6">
@@ -115,7 +118,8 @@ export function CongratsModal({
             확인
           </Button>
         </div>
-      </DialogContent>
-    </Dialog>
+        </Drawer.Content>
+      </Drawer.Portal>
+    </Drawer.Root>
   )
 }

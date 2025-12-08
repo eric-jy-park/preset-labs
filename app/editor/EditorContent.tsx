@@ -80,11 +80,11 @@ export function EditorContent() {
       ) : (
         // Main editor - Photo uploaded
         <div className="h-full">
-          <div className="flex gap-0 h-full">
+          <div className="flex flex-col md:flex-row gap-0 h-full">
             {/* Left - Preview */}
-            <div className="bg-black/20 flex flex-col min-h-[calc(100vh-64px)] w-full">
+            <div className="bg-black/20 flex flex-col min-h-[50vh] md:min-h-[calc(100vh-64px)] w-full order-1 border-b md:border-b-0 border-slate-700/50">
               {/* Top toolbar */}
-              <div className="px-6 py-3 flex items-center justify-between border-b border-slate-700/30">
+              <div className="px-4 md:px-6 py-3 flex items-center justify-between border-b border-slate-700/30">
                 <Button
                   variant="ghost"
                   size="sm"
@@ -99,7 +99,7 @@ export function EditorContent() {
                 </div>
               </div>
               {/* Preview area */}
-              <div className="flex-1 flex items-center justify-center p-6">
+              <div className="flex-1 flex items-center justify-center p-4 md:p-6">
                 <div className="w-full max-w-3xl">
                   <FilterPreview />
                 </div>
@@ -107,9 +107,9 @@ export function EditorContent() {
             </div>
 
             {/* Right - Filters & Download */}
-            <div className="bg-slate-900/50 border-l border-slate-700/50 flex flex-col h-[calc(100vh-64px)]">
+            <div className="bg-slate-900/50 border-l-0 md:border-l border-slate-700/50 flex flex-col min-h-[40vh] md:h-[calc(100vh-64px)] order-2">
               {/* Filter gallery */}
-              <div className="flex-1 p-4 flex flex-col min-h-0">
+              <div className="flex-1 p-3 md:p-4 flex flex-col min-h-0">
                 <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 flex-shrink-0">
                   Filters
                 </h3>
@@ -119,7 +119,7 @@ export function EditorContent() {
               </div>
 
               {/* Download section - Fixed at bottom */}
-              <div className="p-4 border-t border-slate-700/50 flex-shrink-0 space-y-3">
+              <div className="p-3 md:p-4 border-t border-slate-700/50 flex-shrink-0 space-y-3">
                 <div className="flex justify-center">
                   <CreditBadge size="small" />
                 </div>
